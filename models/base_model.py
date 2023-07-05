@@ -2,6 +2,8 @@
 """
 Parent class that will inherit
 """
+
+
 import uuid
 from datetime import datetime
 from models import storage
