@@ -15,21 +15,15 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initializes all attributes
         """
-        if not kwargs:  # Si aucun argument nommé n'a été passé
+        if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()  # Permet de crée un nouvel objet
-            # datetime représentant la date et l'heure actuelles, et l'assigne
-            # à l'attribut created_at
+            self.created_at = datetime.now()
             self.updated_at = self.created_at
-            # donne la même valeur que created_at à l'attribut updated_at
         else:
             for key, val in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
                     dataTime = "%Y-%m-%dT %H:%M:%S.%f"
                     val = datetime.strptime(kwargs[key], dataTime)
-                    # Convertit la valeur de 'created_at' ou 'updated_at'
-                    # en objet datetime en utilisant le format spécifié
-
                 if key != '__class__':
                     setattr(self, key, val)
 
