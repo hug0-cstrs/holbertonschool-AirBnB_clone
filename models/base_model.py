@@ -4,7 +4,6 @@ Parent class that will inherit
 """
 import uuid
 from datetime import datetime
-from models.base_model import storage  # Importation de storage ajoutée
 
 
 class BaseModel:
@@ -17,6 +16,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            from models.base_model import storage
             storage.new(self)
         else:
             for key, val in kwargs.items():
@@ -33,6 +33,7 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
+        from models.base_model import storage
         storage.save()
 
     def to_dict(self):
