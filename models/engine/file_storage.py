@@ -39,6 +39,7 @@ class FileStorage:
             json.dumps(dictionary, f)
 
     def reload(self):
+        """ Deserializes __objects from the JSON file """
         my_dict = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
                    'State': State, 'City': City, 'Amenity': Amenity,
                    'Review': Review}
@@ -47,4 +48,3 @@ class FileStorage:
                 other_dict = json.loads(f.read())
                 for key, val in other_dict.items():
                     self.new(my_dict[val['__class__']](**val))
-        """ Deserializes __objects from the JSON file """
