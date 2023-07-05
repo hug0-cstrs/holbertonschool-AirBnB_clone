@@ -4,7 +4,6 @@ Parent class that will inherit
 """
 import uuid
 from datetime import datetime
-from models import storage
 
 
 class BaseModel:
@@ -17,6 +16,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())  # Génère un UUID unique et l'assigne à l'attribut 'id'
             self.created_at = datetime.now()  # Permet de crée un nouvel objet datetime représentant la date et l'heure actuelles, et l'assigne à l'attribut created_at
             self.updated_at = self.created_at  # donne la même valeur que created_at à l'attribut updated_at
+            from models.base_model import storage
             storage.new(self)  # Stocke l'objet dans le système de stockage
         else:
             for key, val in kwargs.items():
@@ -41,6 +41,7 @@ class BaseModel:
         """updates last update time
         """
         self.updated_at = datetime.now()
+        from models.base_model import storage
         storage.save()
 
     def to_dict(self):
@@ -50,16 +51,3 @@ class BaseModel:
         my_dict["updated_at"] = my_dict["updated_at"].isoformat()
         my_dict["__class__"] = self.__class__.__name__
         return my_dict
-
-
-my_model = BaseModel()
-my_model.name = "My First Model"
-my_model.my_number = 89
-print(my_model)
-my_model.save()
-print(my_model)
-my_model_json = my_model.to_dict()
-print(my_model_json)
-print("JSON of my_model:")
-for key in my_model_json.keys():
-    print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
