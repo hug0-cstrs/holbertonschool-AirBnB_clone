@@ -9,40 +9,46 @@ from models.base_model import BaseModel
 class Test_BaseModel(unittest.TestCase):
     """Unittest for class BaseModel"""
 
-    my_model = BaseModel()
+    def setUp(self):
+        self.model1 = BaseModel()
 
-    def testBaseModel1(self):
-        """ Test attributes value of a BaseModel instance """
+        test_args = {'created_at': datetime(2017, 2, 10, 2, 6, 55, 258849),
+                     'updated_at': datetime(2017, 2, 10, 2, 6, 55, 258966),
+                     'id': '46458416-e5d5-4985-aa48-a2b369d03d2a',
+                     'name': 'model1'}
+        self.model2 = BaseModel(test_args)
+        self.model2.save()
 
-        self.my_model.name = "Holberton"
-        self.my_model.my_number = 89
-        self.my_model.save()
-        my_model_json = self.my_model.to_dict()
+    def test_instantiation(self):
+        self.assertIsInstance(self.model1, BaseModel)
+        self.assertTrue(hasattr(self.model1, "created_at"))
+        self.assertTrue(hasattr(self.model1, "id"))
+        self.assertFalse(hasattr(self.model1, "updated_at"))
 
-        self.assertEqual(self.my_model.name, my_model_json['name'])
-        self.assertEqual(self.my_model.my_number, my_model_json['my_number'])
-        self.assertEqual('BaseModel', my_model_json['__class__'])
-        self.assertEqual(self.my_model.id, my_model_json['id'])
+    def test_reinstantiation(self):
+        self.assertIsInstance(self.model2, BaseModel)
+        self.assertEqual(self.model2.id,
+                         '46458416-e5d5-4985-aa48-a2b369d03d2a')
+        self.assertEqual(self.model2.created_at,
+                         datetime(2017, 2, 10, 2, 6, 55, 258849))
 
-    def testSave(self):
-        """ Checks if save method updates the public instance instance
-        attribute updated_at """
-        self.my_model.first_name = "First"
-        self.my_model.save()
+    def test_save(self):
+        self.assertFalse(hasattr(self.model1, "updated_at"))
+        self.model1.save()
+        self.assertTrue(hasattr(self.model1, "updated_at"))
+        old_time = self.model2.updated_at
+        self.model2.save()
+        self.assertNotEqual(old_time, self.model2.updated_at)
 
-        self.assertIsInstance(self.my_model.id, str)
-        self.assertIsInstance(self.my_model.created_at, datetime.datetime)
-        self.assertIsInstance(self.my_model.updated_at, datetime.datetime)
-
-        first_dict = self.my_model.to_dict()
-
-        self.my_model.first_name = "Second"
-        self.my_model.save()
-        sec_dict = self.my_model.to_dict()
-
-        self.assertEqual(first_dict['created_at'], sec_dict['created_at'])
-        self.assertNotEqual(first_dict['updated_at'], sec_dict['updated_at'])
+    def test_to_json(self):
+        jsonified = self.model2.to_json()
+        self.assertNotEqual(self.model2.__dict__, jsonified)
+        self.assertNotIsInstance(jsonified["created_at"], datetime)
+        self.assertNotIsInstance(jsonified["updated_at"], datetime)
+        self.assertEqual(jsonified["created_at"], '2017-02-10 02:06:55.258849')
+        self.assertTrue(hasattr(jsonified, "__class__"))
+        self.assertEqual(jsonified["__class__"], "BaseModel")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
