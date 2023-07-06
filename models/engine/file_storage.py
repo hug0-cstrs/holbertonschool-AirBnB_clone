@@ -39,4 +39,9 @@ class FileStorage:
 
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                FileStorage.__objects = json.load(file)
+                data = json.load(file)
+                for key, value in data.items():
+                    cls_name = key.split('.')[0]
+                    if cls_name == "BaseModel":
+                        from models.base_model import BaseModel
+                        self.__objects[key] = BaseModel(**value)
