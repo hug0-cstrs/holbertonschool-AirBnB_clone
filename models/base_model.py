@@ -4,15 +4,16 @@ Parent class that will inherit
 """
 
 
-import uuid
 from datetime import datetime
-from models import storage
+import models
+import uuid
 
 
 class BaseModel:
     """Defines all common attributes/methods
     """
     def __init__(self, *args, **kwargs):
+        from models import storage
         """Initializes all attributes
         """
         if not kwargs:
@@ -38,6 +39,7 @@ class BaseModel:
         return ("[{}] ({}) {}".format(nameClass, self.id, self.__dict__))
 
     def save(self):
+        from models import storage
         """updates last update time
         """
         self.updated_at = datetime.now()

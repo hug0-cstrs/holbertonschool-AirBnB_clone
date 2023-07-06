@@ -5,13 +5,6 @@ and deserializes JSON file to instances
 """
 import json
 import os
-from models.base_model import BaseModel
-from models.base_model import User
-from models.base_model import State
-from models.base_model import City
-from models.base_model import Amenity
-from models.base_model import Place
-from models.base_model import Review
 
 
 class FileStorage:
@@ -39,6 +32,13 @@ class FileStorage:
             json.dumps(dictionary, f)
 
     def reload(self):
+        from models.base_model import User
+        from models.base_model import State
+        from models.base_model import City
+        from models.base_model import Amenity
+        from models.base_model import Place
+        from models.base_model import Review
+        from models.base_model import BaseModel
         """ Deserializes __objects from the JSON file """
         my_dict = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
                    'State': State, 'City': City, 'Amenity': Amenity,

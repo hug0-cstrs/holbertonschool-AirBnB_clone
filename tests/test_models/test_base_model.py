@@ -20,7 +20,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.my_model.updated_at, datetime)
 
     def test_str(self):
-        """Test for str method"""
+        """Test for str metthod"""
         self.assertEqual(str(self.my_model), f"[BaseModel]\
  ({self.my_model.id}) {self.my_model.__dict__}")
 
