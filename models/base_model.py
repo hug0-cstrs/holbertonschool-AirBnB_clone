@@ -46,19 +46,9 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """creates a new dictionary, adding a key and returning
-        datemtimes converted to strings
-        """
-        new_dict = {}
-
-        for key, values in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                new_dict[key] = values.strftime("%Y-%m-%dT%H:%M:%S.%f")
-            else:
-                if not values:
-                    pass
-                else:
-                    new_dict[key] = values
-        new_dict['__class__'] = self.__class__.__name__
-
-        return new_dict
+        """ Returns dict with all keys/values of __dict__ of the instance"""
+        my_dict = self.__dict__.copy()
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        my_dict["__class__"] = self.__class__.__name__
+        return my_dict
