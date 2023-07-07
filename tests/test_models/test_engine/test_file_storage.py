@@ -4,6 +4,7 @@ import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
+from datetime import datetime
 import os
 import json
 
@@ -77,6 +78,17 @@ class FileStorageTests(unittest.TestCase):
         storage.reload()
         for key, value in storage.all().items():
             self.assertEqual(dobj[key].to_dict(), value.to_dict())
+
+    def test_save_updates_updated_at(self):
+        model = BaseModel()
+        original_updated_at = model.updated_at
+
+        # Simulate saving the model
+        model.save()
+
+        # Check that updated_at is updated
+        self.assertNotEqual(original_updated_at, model.updated_at)
+        self.assertIsInstance(model.updated_at, datetime)
 
     def test_save_FileStorage(self):
         """ Test if 'new' method is working good """
