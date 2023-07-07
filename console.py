@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
-    valid_classes = [
+    TheClasse = [
         'BaseModel', 'User'
     ]
 
@@ -35,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             class_name = args.split()[0]
-            if class_name not in HBNBCommand.valid_classes:
+            if class_name not in ["BaseModel"]:
                 print("** class doesn't exist **")
             else:
                 new_instance = BaseModel()
@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
         args_list = args.split()
         if not args_list:
             print("** class name missing **")
-        elif args_list[0] not in HBNBCommand.valid_classes:
+        elif args_list[0] not in ["BaseModel"]:
             print("** class doesn't exist **")
         elif len(args_list) < 2:
             print("** instance id missing **")
@@ -65,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
         args_list = args.split()
         if not args_list:
             print("** class name missing **")
-        elif args_list[0] not in HBNBCommand.valid_classes:
+        elif args_list[0] not in ["BaseModel"]:
             print("** class doesn't exist **")
         elif len(args_list) < 2:
             print("** instance id missing **")
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in obj_dict.values()])
         else:
             class_name = args.split()[0]
-            if class_name not in HBNBCommand.valid_classes:
+            if class_name not in ["BaseModel"]:
                 print("** class doesn't exist **")
             else:
                 print([str(obj) for obj in obj_dict.values()
