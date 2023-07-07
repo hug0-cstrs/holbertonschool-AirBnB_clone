@@ -38,10 +38,17 @@ class FileStorage:
         If the file doesn’t exist, no exception should be raised) """
         from models.base_model import BaseModel
         from models.user import User
-        TheClasse = {
-            'BaseModel': BaseModel,
-            'User': User,
-        }
+        from models.place import Place
+        from models.city import City
+        from models.amenity import Amenity
+        from models.state import State
+        from models.review import Review
+
+        my_dict = {
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+                   }
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
