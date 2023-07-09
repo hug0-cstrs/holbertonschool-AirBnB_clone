@@ -39,9 +39,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(model_dict["created_at"], str)
         self.assertIsInstance(model_dict["updated_at"], str)
 
-    def setUp(self):
-        self.model = BaseModel()
-
     def tearDown(self):
         del self.model
 
