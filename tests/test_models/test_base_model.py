@@ -38,3 +38,16 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model_dict["id"], self.my_model.id)
         self.assertIsInstance(model_dict["created_at"], str)
         self.assertIsInstance(model_dict["updated_at"], str)
+
+    def setUp(self):
+        self.model = BaseModel()
+
+    def tearDown(self):
+        del self.model
+
+    def test_save(self):
+        initial_updated_at = self.model.updated_at
+        self.model.save()
+        new_updated_at = self.model.updated_at
+        self.assertNotEqual(initial_updated_at, new_updated_at)
+        self.assertIsInstance(new_updated_at, datetime)
