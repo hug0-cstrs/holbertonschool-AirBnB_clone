@@ -1,8 +1,8 @@
 #!/usr/bin.python3
 """
     Module of Unittest for models/engine/file_storage
-
 """
+
 
 import unittest
 import os
@@ -188,31 +188,6 @@ class TestFileStorage_MethodReload(unittest.TestCase):
         self.assertNotIn(base_key, models.storage.all())
         models.storage.reload()
         self.assertIn(base_key, models.storage.all())
-
-class TestFileStorage(unittest.TestCase):
-    def setUp(self):
-        # Initialisation du test
-        pass
-
-    def tearDown(self):
-        # Nettoyage après le test
-        pass
-
-    def test_all(self):
-        # Test de la méthode all() de la classe FileStorage
-        pass
-
-    def test_new(self):
-        # Test de la méthode new() de la classe FileStorage
-        pass
-
-    def test_save(self):
-        # Test de la méthode save() de la classe FileStorage
-        pass
-
-    def test_reload(self):
-        # Test de la méthode reload() de la classe FileStorage
-        pass
 
 
 if __name__ == "__main__":
