@@ -61,8 +61,8 @@ This repository constains the following files:
 |[help](./console.py)| Prints information about specific command |
 |[quit/ EOF](./console.py)| Exit the program |
 
-## Examples:
-###### Example No.1
+## Example:
+
 ```
 hug0@LAPTOP-25FUP3F5:~/holbertonschool-AirBnB_clone$ ./console.py 
 (hbnb) create User
