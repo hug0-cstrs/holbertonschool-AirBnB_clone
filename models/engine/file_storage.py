@@ -9,7 +9,7 @@ import os
 
 class FileStorage:
     """ Class that serializes and deserializes JSON objects """
-    __file_path = 'file.json'
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
@@ -36,24 +36,26 @@ class FileStorage:
         """Deserializes the JSON file to __objects (only if the JSON file
         (__file_path) exists ; otherwise, do nothing.
         If the file doesn’t exist, no exception should be raised) """
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.city import City
-        from models.amenity import Amenity
-        from models.state import State
-        from models.review import Review
+        from models import base_model
+        from models import user
+        from models import amenity
+        from models import city
+        from models import place
+        from models import review
+        from models import state
 
-        my_dict = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-                   }
-        if os.path.exists(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                data = json.load(file)
-                for key, value in data.items():
-                    cls_name = key.split('.')[0]
-                    if cls_name == "BaseModel":
-                        from models.base_model import BaseModel
-                        self.__objects[key] = BaseModel(**value)
+        class_dict = {"BaseModel": base_model, "Amenity": amenity,
+                      "City": city, "Place": place,
+                      "Review": review, "State": state, "User": user}
+
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r', encoding='utf-8') as file:
+                reloaded_objects = {}
+                reloaded_objects = json.load(file)
+                for key, value in reloaded_objects.items():
+                    class_name = value['__class__']
+                    if class_name in class_dict:
+                        cls = getattr(class_dict[class_name], class_name)
+
+                    obj = cls(**value)
+                    self.__objects[key] = obj
